@@ -21,10 +21,11 @@ def process_item(item):
 def run_pipeline() -> int:
     count = 0
     items = mock_news()
+    rss_sources = set()
     existing = list_news()
     for source in load_rss_sources():
         try:
-            fetched = source.fetch(); items.extend(fetched); save_source_status(source.name, "ok", f"Fetched {len(fetched)} items")
+            fetched = source.fetch(); items.extend(fetched); rss_sources.add(source.name); save_source_status(source.name, "ok", f"Fetched {len(fetched)} items")
         except Exception as exc:
             save_source_status(source.name, "error", str(exc)[:500])
     for item in items:
@@ -39,6 +40,8 @@ def run_pipeline() -> int:
             if save_news(processed): count += 1; existing.append(processed)
         except Exception as exc:
             save_source_status(item.source, "error", str(exc)[:500])
+    for source_name in rss_sources:
+        save_source_status(source_name, "ok", "RSS feed fetched and processed")
     return count
 
 def load_rss_sources():
