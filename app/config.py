@@ -18,6 +18,7 @@ class Settings(BaseSettings):
     telegram_chat_id: str = ""
     notification_provider: str = "console"
     enable_rss: bool = True
+    enable_mock_data: bool = False
 
     @property
     def database_path(self) -> Path:

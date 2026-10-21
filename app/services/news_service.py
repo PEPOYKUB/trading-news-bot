@@ -20,7 +20,8 @@ def process_item(item):
 
 def run_pipeline() -> int:
     count = 0
-    items = mock_news()
+    settings = get_settings()
+    items = mock_news() if settings.enable_mock_data else []
     rss_sources = set()
     existing = list_news()
     for source in load_rss_sources():

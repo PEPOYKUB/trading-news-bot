@@ -4,13 +4,19 @@ sources:
     enabled: true
     url: https://www.cnbc.com/id/100003114/device/rss/rss.html
     attribution: Headlines and summaries are provided by CNBC; open the original article for full content.
+    trust_level: Established publisher
+    website: https://www.cnbc.com/
   - name: Federal Reserve Press Releases
     type: rss
     enabled: true
     url: https://www.federalreserve.gov/feeds/press_all.xml
     attribution: Official Federal Reserve RSS feed; open the original release for full content.
+    trust_level: Official source
+    website: https://www.federalreserve.gov/
   - name: CoinDesk
     type: rss
     enabled: true
     url: https://www.coindesk.com/arc/outboundfeeds/rss/
     attribution: Headlines and summaries are provided by CoinDesk; open the original article for full content.
+    trust_level: Established publisher
+    website: https://www.coindesk.com/
