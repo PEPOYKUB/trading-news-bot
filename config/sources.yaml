@@ -1,0 +1,6 @@
+sources:
+  - name: Example RSS (disabled by default)
+    type: rss
+    enabled: false
+    url: https://example.com/finance.xml
+    attribution: Replace with a feed whose terms permit access.

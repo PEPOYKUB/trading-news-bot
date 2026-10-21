@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: market-pulse-api
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app.web:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /
+    envVars:
+      - key: AI_PROVIDER
+        value: mock
+      - key: TIMEZONE
+        value: Asia/Bangkok
+      - key: WATCHLIST
+        value: EURUSD,GBPUSD,XAUUSD,BTCUSD,NAS100

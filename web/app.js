@@ -1,0 +1,16 @@
+const $ = (id) => document.getElementById(id);
+const esc = (value) => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+let allItems = [];
+function query(){return new URLSearchParams({market:$('market').value,importance:$('importance').value,asset:$('asset').value,q:$('query').value})}
+async function loadNews(){
+  const res=await fetch('/api/news?'+query()); const data=await res.json(); allItems=data.items;
+  const critical=allItems.filter(x=>x.importance==='CRITICAL').length, high=allItems.filter(x=>x.importance==='HIGH').length;
+  $('total').textContent=allItems.length; $('critical').textContent=critical; $('high').textContent=high; $('result-count').textContent=`${data.count} รายการ`; $('updated').textContent=`อัปเดต ${new Date().toLocaleTimeString('th-TH',{hour:'2-digit',minute:'2-digit'})}`;
+  $('news').innerHTML=data.items.length?data.items.map(card).join(''):'<div class="loading">ไม่พบข่าวตามตัวกรอง</div>';
+}
+function card(x){const cls=x.importance==='CRITICAL'?'critical':'high';const assets=(x.related_assets||[]).join(', ')||'ไม่ทราบจากแหล่งข้อมูล';return `<article class="news-card"><div class="news-top"><span class="badge ${cls}">${esc(x.importance)}</span><span class="meta">${esc(x.source)} · ${esc(x.local_published_at)}</span></div><div class="news-title">${esc(x.title)}</div><div class="news-summary">${esc(x.short_summary).replace(/\n/g,'<br>')}</div><div class="meta">สินทรัพย์ที่อาจได้รับผลกระทบ: <span class="asset">${esc(assets)}</span>${x.url?`<a href="${esc(x.url)}" target="_blank" rel="noopener">อ่านต้นฉบับ ↗</a>`:''}</div><details class="details"><summary>ดูเหตุผลและสิ่งที่ควรติดตาม</summary><p>${esc(x.impact_summary)}</p><p>${esc(x.follow_up)}</p></details></article>`}
+async function loadCalendar(){const data=await (await fetch('/api/calendar')).json();$('calendar').innerHTML=data.items.map(x=>`<div class="calendar-row"><strong>${esc(x.importance)}</strong>${esc(x.event_name)} · ${esc(x.currency)} · ${new Date(x.event_time).toLocaleString('th-TH')} · ${esc((x.related_assets||[]).join(', '))}</div>`).join('')}
+async function loadSources(){const data=await (await fetch('/api/sources')).json();$('sources').textContent=new Set(data.items.map(x=>x.name)).size;$('source-status').innerHTML=data.items.map(x=>`<div class="source-row"><b>${esc(x.name)}</b><span class="${x.status==='ok'?'ok':''}">${esc(x.status)}</span><span>${esc(x.message)}</span><span>${esc(x.last_fetched_at||'—')}</span></div>`).join('')||'<div class="loading">ยังไม่มีสถานะแหล่งข่าว</div>'}
+async function refresh(){ $('refresh').disabled=true; await fetch('/api/refresh',{method:'POST'}); await Promise.all([loadNews(),loadCalendar(),loadSources()]); $('refresh').disabled=false; }
+['market','importance','asset','query'].forEach(id=>$(id).addEventListener('input',loadNews));$('refresh').addEventListener('click',refresh);
+(async()=>{const data=await (await fetch('/api/news')).json();const markets=[...new Set(data.items.flatMap(x=>x.market||[]))].sort();$('market').innerHTML='<option value="">ทั้งหมด</option>'+markets.map(x=>`<option value="${esc(x)}">${esc(x)}</option>`).join('');await Promise.all([loadNews(),loadCalendar(),loadSources()])})();
