@@ -10,6 +10,12 @@ WEB_DIR = Path(__file__).resolve().parent.parent / "web"
 app = FastAPI(title="Market Pulse API", version="1.0.0")
 app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_methods=["GET", "POST"], allow_headers=["*"])
 
+@app.on_event("startup")
+def seed_demo_data():
+    # Make a fresh hosted instance useful immediately without committing SQLite data.
+    if not list_news():
+        run_pipeline()
+
 @app.get("/", include_in_schema=False)
 def index(): return FileResponse(WEB_DIR / "index.html")
 
