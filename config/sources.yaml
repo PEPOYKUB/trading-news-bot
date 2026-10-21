@@ -1,6 +1,16 @@
 sources:
-  - name: Example RSS (disabled by default)
+  - name: CNBC Top News
     type: rss
-    enabled: false
-    url: https://example.com/finance.xml
-    attribution: Replace with a feed whose terms permit access.
+    enabled: true
+    url: https://www.cnbc.com/id/100003114/device/rss/rss.html
+    attribution: Headlines and summaries are provided by CNBC; open the original article for full content.
+  - name: Federal Reserve Press Releases
+    type: rss
+    enabled: true
+    url: https://www.federalreserve.gov/feeds/press_all.xml
+    attribution: Official Federal Reserve RSS feed; open the original release for full content.
+  - name: CoinDesk
+    type: rss
+    enabled: true
+    url: https://www.coindesk.com/arc/outboundfeeds/rss/
+    attribution: Headlines and summaries are provided by CoinDesk; open the original article for full content.

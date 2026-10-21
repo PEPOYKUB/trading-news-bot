@@ -1,6 +1,6 @@
 from app.schemas import NewsItem
 CRITICAL = ["fomc", "cpi", "nfp", "war", "flash crash", "default", "regulation", "exchange halt"]
-HIGH = ["interest rate", "central bank", "fed", "opec", "etf", "earnings", "guidance", "sanction"]
+HIGH = ["interest rate", "central bank", "fed", "fomc", "opec", "etf", "earnings", "guidance", "sanction", "inflation", "jobs", "nfp", "cpi", "gdp", "pmi", "tariff", "oil", "bitcoin", "nasdaq", "dow", "shares", "stock market"]
 def assess_importance(item: NewsItem) -> NewsItem:
     text = f"{item.title} {item.raw_text}".lower()
     if any(x in text for x in CRITICAL): item.importance, item.importance_reason = "CRITICAL", "พบคำสำคัญที่อาจทำให้ตลาดผันผวนมาก; เป็นการประเมินเบื้องต้น ไม่รับประกันทิศทางราคา"

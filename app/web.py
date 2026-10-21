@@ -1,4 +1,5 @@
 from pathlib import Path
+from threading import Thread
 from fastapi import FastAPI, Query
 from fastapi.responses import FileResponse
 from fastapi.middleware.cors import CORSMiddleware
@@ -12,9 +13,8 @@ app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_methods=["GET", "P
 
 @app.on_event("startup")
 def seed_demo_data():
-    # Make a fresh hosted instance useful immediately without committing SQLite data.
-    if not list_news():
-        run_pipeline()
+    # Fetch fresh sources in the background so the hosted page opens immediately.
+    Thread(target=run_pipeline, name="market-pulse-fetch", daemon=True).start()
 
 @app.get("/", include_in_schema=False)
 def index(): return FileResponse(WEB_DIR / "index.html")
