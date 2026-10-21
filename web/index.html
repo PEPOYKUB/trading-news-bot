@@ -12,21 +12,21 @@
     <aside class="sidebar">
       <div class="brand-mark">◈</div><div class="brand">MARKET PULSE<span>market intelligence</span></div>
       <div class="nav-label">WORKSPACE</div>
-      <div class="nav-item active"><span class="nav-icon">⌂</span> Market brief</div>
-      <div class="nav-item"><span class="nav-icon">◎</span> Signal map</div>
-      <div class="nav-item"><span class="nav-icon">☆</span> Watchlist</div>
-      <div class="nav-item"><span class="nav-icon">▥</span> Markets</div>
-      <div class="nav-item"><span class="nav-icon">▤</span> News</div>
-      <div class="nav-item"><span class="nav-icon">□</span> Calendar</div>
-      <div class="nav-item"><span class="nav-icon">▽</span> Screener</div>
-      <div class="nav-item"><span class="nav-icon">▦</span> Tools</div>
+      <div class="nav-item active" data-target=".hero"><span class="nav-icon">⌂</span> Market brief</div>
+      <div class="nav-item" data-target=".hero-visual"><span class="nav-icon">◎</span> Signal map</div>
+      <div class="nav-item" data-target=".reference-watch"><span class="nav-icon">☆</span> Watchlist</div>
+      <div class="nav-item" data-target=".ticker-strip"><span class="nav-icon">▥</span> Markets</div>
+      <div class="nav-item" data-target=".news-layout"><span class="nav-icon">▤</span> News</div>
+      <div class="nav-item" data-target="#calendar"><span class="nav-icon">□</span> Calendar</div>
+      <div class="nav-item" data-target=".category-tabs"><span class="nav-icon">▽</span> Screener</div>
+      <div class="nav-item" data-target="#source-status"><span class="nav-icon">▦</span> Tools</div>
       <div class="nav-label filter-label">FILTERS</div>
       <div class="side-section"><label>ตลาด</label><select id="market"><option value="">ทั้งหมด</option></select></div>
       <div class="side-section"><label>ระดับผลกระทบ</label><select id="importance"><option value="">ทั้งหมด</option><option value="CRITICAL">CRITICAL</option><option value="HIGH">HIGH</option></select></div>
       <div class="side-section"><label>สินทรัพย์</label><input id="asset" placeholder="เช่น BTCUSD" /></div>
       <div class="side-section"><label>ค้นหาข่าว</label><input id="query" placeholder="เช่น Fed, Bitcoin" /></div>
       <p class="side-note">แสดงเฉพาะข่าวสำคัญที่ระบบประเมินว่ามีโอกาสกระทบตลาด</p>
-      <div class="sidebar-lower"><div class="nav-item"><span class="nav-icon">♧</span> Alerts <i class="alert-dot"></i></div><div class="nav-item"><span class="nav-icon">⚙</span> Settings</div><div class="pro-card"><b>♛ &nbsp; Pro</b><span>Upgrade for deeper insights</span></div></div>
+      <div class="sidebar-lower"><div class="nav-item" data-target=".notice"><span class="nav-icon">♧</span> Alerts <i class="alert-dot"></i></div><div class="nav-item" data-target=".side-section"><span class="nav-icon">⚙</span> Settings</div><div class="pro-card"><b>♛ &nbsp; Pro</b><span>Upgrade for deeper insights</span></div></div>
       <div class="side-footer">Educational use only<br />ไม่ใช่คำแนะนำการลงทุน</div>
     </aside>
     <main class="main">
@@ -36,7 +36,7 @@
       <div class="notice">ข้อมูลเพื่อการศึกษาเท่านั้น ไม่ใช่คำแนะนำการลงทุน · ระบบนี้ไม่มีฟังก์ชันส่งคำสั่งซื้อขายจริง</div>
       <section class="metrics"><div class="metric"><span>ข่าวสำคัญ</span><strong id="total">—</strong><small class="metric-note teal">● live scan</small></div><div class="metric"><span>CRITICAL</span><strong id="critical">—</strong><small class="metric-note gold">ความผันผวนสูง</small></div><div class="metric"><span>HIGH</span><strong id="high">—</strong><small class="metric-note orange">ควรติดตามทันที</small></div><div class="metric"><span>แหล่งข่าว</span><strong id="sources">—</strong><small class="metric-note">attributed sources</small></div></section>
       <section class="news-layout"><div class="news-column"><div class="section-head"><h2>ข่าวที่ควรจับตา <span class="chevron">›</span></h2><span id="result-count"></span></div><div class="category-tabs"><button class="selected">All</button><button>Markets</button><button>Economy</button><button>Tech</button><button>Crypto</button><button>Commodities</button></div><div id="news" class="news-list"><div class="loading">กำลังโหลดข่าว...</div></div></div><aside class="reference-watch"><div class="watch-title"><h2>Watchlist</h2><b>＋</b></div><div class="reference-row"><span>● &nbsp;AAPL</span><i>〽〽</i><b>183.20</b><em>+1.24%</em></div><div class="reference-row"><span>● &nbsp;MSFT</span><i>〽〽</i><b>415.10</b><em>+0.86%</em></div><div class="reference-row"><span>● &nbsp;NVDA</span><i>〽〽</i><b>875.32</b><em>+2.31%</em></div><div class="reference-row"><span>● &nbsp;TSLA</span><i class="negative">〽〽</i><b>242.18</b><em class="negative">−1.02%</em></div><div class="reference-row"><span>● &nbsp;BTC</span><i>〽〽</i><b>68,342.10</b><em>+0.42%</em></div><div class="reference-row"><span>● &nbsp;ETH</span><i>〽〽</i><b>3,284.55</b><em>+1.18%</em></div><div class="reference-row"><span>● &nbsp;Gold</span><i>〽〽</i><b>2,385.60</b><em>+0.63%</em></div><div class="reference-row"><span>● &nbsp;WTI</span><i class="negative">〽〽</i><b>78.21</b><em class="negative">−0.71%</em></div></aside></section>
-      <section><div class="section-head"><h2>Economic Calendar</h2></div><div id="calendar" class="calendar"></div></section>
+      <section id="calendar-section"><div class="section-head"><h2>Economic Calendar</h2></div><div id="calendar" class="calendar"></div></section>
       <section><div class="section-head"><h2>สถานะแหล่งข่าว</h2></div><div id="source-status" class="source-status"></div></section>
     </main>
   </div>

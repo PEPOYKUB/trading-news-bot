@@ -29,7 +29,7 @@ def run_pipeline() -> int:
             save_source_status(source.name, "error", str(exc)[:500])
     for item in items:
         try:
-            if any(is_duplicate(item, old) and old.importance in {"CRITICAL", "HIGH"} and "เหตุการณ์:" not in old.short_summary for old in existing):
+            if item.id not in {old.id for old in existing} and any(is_duplicate(item, old) and old.importance in {"CRITICAL", "HIGH"} and "เหตุการณ์:" not in old.short_summary for old in existing):
                 continue
             save_source_status(item.source, "ok", "Mock source loaded")
             processed = process_item(item)

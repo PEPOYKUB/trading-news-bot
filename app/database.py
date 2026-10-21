@@ -6,7 +6,7 @@ from .schemas import NewsItem
 
 SCHEMA = """
 CREATE TABLE IF NOT EXISTS news (
- id TEXT PRIMARY KEY, title TEXT NOT NULL, source TEXT, url TEXT UNIQUE,
+ id TEXT PRIMARY KEY, title TEXT NOT NULL, source TEXT, url TEXT UNIQUE, image_url TEXT,
  published_at TEXT, fetched_at TEXT, language TEXT, market TEXT, region TEXT,
  related_assets TEXT, importance TEXT, importance_reason TEXT, sentiment TEXT,
  impact_summary TEXT, short_summary TEXT, keywords TEXT, duplicate_group TEXT,
@@ -24,11 +24,15 @@ def get_connection(db_path: Path | None = None):
     return con
 
 def init_db() -> None:
-    with get_connection() as con: con.executescript(SCHEMA)
+    with get_connection() as con:
+        con.executescript(SCHEMA)
+        columns = {row[1] for row in con.execute("PRAGMA table_info(news)").fetchall()}
+        if "image_url" not in columns:
+            con.execute("ALTER TABLE news ADD COLUMN image_url TEXT DEFAULT ''")
 
 def save_news(item: NewsItem) -> bool:
     init_db(); data = item.model_dump()
-    fields = ["id", "title", "source", "url", "published_at", "fetched_at", "language", "market", "region", "related_assets", "importance", "importance_reason", "sentiment", "impact_summary", "short_summary", "keywords", "duplicate_group", "raw_text", "processing_status", "follow_up", "local_published_at", "utc_published_at", "related_count"]
+    fields = ["id", "title", "source", "url", "image_url", "published_at", "fetched_at", "language", "market", "region", "related_assets", "importance", "importance_reason", "sentiment", "impact_summary", "short_summary", "keywords", "duplicate_group", "raw_text", "processing_status", "follow_up", "local_published_at", "utc_published_at", "related_count"]
     vals = [data[f].isoformat() if hasattr(data[f], "isoformat") else json.dumps(data[f], ensure_ascii=False) if isinstance(data[f], list) else data[f] for f in fields]
     updates = ",".join(f"{field}=excluded.{field}" for field in fields if field != "id")
     with get_connection() as con:

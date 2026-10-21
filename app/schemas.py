@@ -6,6 +6,7 @@ class NewsItem(BaseModel):
     title: str
     source: str = "Unknown"
     url: str = ""
+    image_url: str = ""
     published_at: datetime
     fetched_at: datetime = Field(default_factory=datetime.utcnow)
     language: str = "en"
