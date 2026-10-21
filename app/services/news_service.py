@@ -31,7 +31,7 @@ def run_pipeline() -> int:
         try:
             if item.id not in {old.id for old in existing} and any(is_duplicate(item, old) and old.importance in {"CRITICAL", "HIGH"} and "เหตุการณ์:" not in old.short_summary for old in existing):
                 continue
-            save_source_status(item.source, "ok", "Mock source loaded")
+            save_source_status(item.source, "ok", "Mock source loaded" if item.source.startswith("Mock ") else "RSS item processed")
             processed = process_item(item)
             # Store only actionable market-moving news for a focused dashboard.
             if processed.importance not in {"CRITICAL", "HIGH"}:
